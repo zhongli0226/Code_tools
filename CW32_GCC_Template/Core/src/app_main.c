@@ -2,14 +2,19 @@
 #include "cw32f030_gpio.h"
 #include "cw32f030_rcc.h"
 
+#include "uart.h"
+#include <stdio.h>
+
 
 int main(void)
 {
     RCC_Configuration();
-
+    UART1_Iint();
+    printf("hello world\r\n");
     while (1)
     {
-
+        printf("hello world\r\n");
+        delay1ms(1000);
     }
     return 0;
 }

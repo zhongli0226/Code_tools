@@ -19,6 +19,7 @@
 #include "interrupts_cw32f030.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "cw32f030_uart.h"
 /* USER CODE END Includes */
 
 
@@ -391,7 +392,10 @@ void SPI2_IRQHandler(void)
 void UART1_IRQHandler(void)
 {
     /* USER CODE BEGIN */
-
+    if(USART_GetITStatus(CW_UART1, USART_IT_RC) != RESET)
+    { 
+        USART_ClearITPendingBit(CW_UART1, USART_IT_RC); 
+    }
     /* USER CODE END */
 }
 

@@ -12,7 +12,7 @@
             "type": "cortex-debug",
             "device": "CW32F030x8",
             "runToEntryPoint": "main",
-            "showDevDebugOutput": "none",
+            "showDevDebugOutput":"none",
             "servertype": "jlink",
             "svdFile": "Tools/CW32F030.svd",
             "interface": "swd"

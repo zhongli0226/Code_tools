@@ -4,7 +4,7 @@ TARGET = CW32_DEMO
 # 调试信息
 DEBUG = 1
 # 优化等级
-OPT = -O1
+OPT = -Og
 # 链接时优化
 LTO = -flto
 
@@ -24,37 +24,6 @@ include Libraries/Libraries.mk
 User_DIR = User
 include User/User.mk
 
-# C源文件宏定义
-# C_DEFS += -D
-
-# C头文件目录
-C_INCLUDES +=
-
-# C源文件
-C_SOURCES +=
-
-# 向 LIBDIR 中添加静态库文件路径
-# LIBDIR += -L$(Libraries_DIR)/Lib
-# 向 LIBS 中添加需要链接的静态库
-# LIBS += -lxxxx
-
-# link script
-LDSCRIPT = CW32F030x_FLASH.ld
-
-
-# 汇编文件宏定义
-AS_DEFS += 
-
-# 汇编头文件目录
-AS_INCLUDES += 
-
-# 汇编源文件（starup）
-ASM_SOURCES += startup_cw32f030_gcc.s
-
-# 链接库
-LIBS += -lc -lm -lnosys 
-# 库文件路径
-LIBDIR += 
 
 #######################################
 # 编译器指定
@@ -110,12 +79,48 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 
+# C源文件宏定义
+# C_DEFS += -D
+
+# C头文件目录
+C_INCLUDES +=
+
+# C源文件
+C_SOURCES +=
+
+# 向 LIBDIR 中添加静态库文件路径
+# LIBDIR += -L$(Libraries_DIR)/Lib
+# 向 LIBS 中添加需要链接的静态库
+# LIBS += -lxxxx
+
+# link script
+LDSCRIPT = CW32F030x_FLASH.ld
+
+# 汇编文件宏定义
+AS_DEFS += 
+
+# 汇编头文件目录
+AS_INCLUDES += 
+
+# 汇编源文件（starup）
+ASM_SOURCES += startup_cw32f030_gcc.s
+
+# 链接库
+LIBS += -lc -lm -lnosys 
+# 库文件路径
+LIBDIR += 
+
 # libraries
 LDFLAGS = $(MCU) -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref \
 -Wl,--gc-sections -ffunction-sections --specs=nano.specs --specs=nosys.specs $(LTO) 
 
 # printf float 打印浮点数
 LDFLAGS += -lc -lrdimon -u _printf_float
+
+# cStandard
+CMODE = c99
+# cppStandard
+CPPMODE = c++11
 
 # default action: build all
 all: $(EXEC_DIR)/$(TARGET).elf $(EXEC_DIR)/$(TARGET).hex $(EXEC_DIR)/$(TARGET).bin POST_BUILD
@@ -132,7 +137,7 @@ vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
 	@echo "[CC]    $< -> $@"
-	@$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	@$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@ -std=$(CMODE)
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	@echo "[AS]    $< -> $@"
