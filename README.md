@@ -12,12 +12,11 @@
 |     c_fft     | C语言实现fft代码，可以直接使用，详细可以参考我的博客 |
 |    my_math    |   C语言官方数学库，部分接口快速实现，详细参考博客    |
 | State_machine |            C语言实现有限状态机，模板参考             |
-| travesal_file |   C++实现遍历文件夹下所有CSV文件，并输出结果的模板   |
+|   cpp_file    |   C++实现遍历文件夹下所有CSV文件，并输出结果的模板   |
 |    c_filer    |                  C语言实现FIR滤波器                  |
 |   Makefile    |               win平台通用makefile模板                |
 |   CW32_demo   |            CW32F030 GCC开发环境 基础工程             |
-
-
+|   cpp_fifo    |             通用循环队列，可以也可改写c              |
 
 ### 使用教程
 
